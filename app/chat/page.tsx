@@ -6,13 +6,8 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Bot as Lotus, Send, User } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
-
-interface Message {
-  id: string;
-  role: 'user' | 'assistant';
-  content: string;
-  timestamp: Date;
-}
+import { generateResponse } from "@/lib/together_ai";
+import { Message } from "@/types/chat";
 
 export default function ChatPage() {
   const [message, setMessage] = useState("");
@@ -47,17 +42,27 @@ export default function ChatPage() {
     setMessage("");
     setIsLoading(true);
 
-    // Simulate AI response
-    setTimeout(() => {
+    try {
+      const aiResponse = await generateResponse([...messages, userMessage]);
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: "Hii, how may I help you :)",
+        content: aiResponse,
         timestamp: new Date(),
       };
       setMessages(prev => [...prev, assistantMessage]);
+    } catch (error) {
+      console.error('Error getting AI response:', error);
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: 'assistant',
+        content: "I apologize, but I'm having trouble responding right now. Please try again later.",
+        timestamp: new Date(),
+      };
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
