@@ -2,11 +2,12 @@
 
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Bot as Lotus, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
+import Glogo from "../Glogo";
 
 export default function ChatSidebar() {
   const pathname = usePathname();
@@ -14,7 +15,7 @@ export default function ChatSidebar() {
 
   useEffect(() => {
     // Get user from localStorage
-    const storedUser = localStorage.getItem('user');
+    const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
@@ -23,16 +24,16 @@ export default function ChatSidebar() {
   return (
     <div className="flex h-full w-[300px] flex-col bg-muted p-4">
       <div className="flex items-center gap-2 px-2">
-        <Lotus className="h-6 w-6" />
+        <Glogo />
         <h1 className="text-xl font-bold">Ask Gurudev</h1>
       </div>
-      
-      <Button asChild className="mt-4 gap-2">
+
+      {/* <Button asChild className="mt-4 gap-2">
         <Link href="/chat">
           <Plus className="h-4 w-4" />
           New Chat
         </Link>
-      </Button>
+      </Button> */}
 
       <ScrollArea className="flex-1 px-2 py-4">
         <div className="space-y-2">

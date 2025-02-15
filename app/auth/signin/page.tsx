@@ -1,10 +1,10 @@
 "use client";
 
+import Glogo from "@/components/Glogo";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Bot as Lotus } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -15,31 +15,34 @@ export default function SignInPage() {
   // For demo purposes, we'll just store user data in localStorage
   const handleSignIn = () => {
     if (email && password) {
-      localStorage.setItem('user', JSON.stringify({
-        email,
-        name: email.split('@')[0],
-        image: `https://api.dicebear.com/7.x/avataaars/svg?seed=${email}`
-      }));
-      window.location.href = '/chat';
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          email,
+          name: email.split("@")[0],
+          image: `https://api.dicebear.com/7.x/avataaars/svg?seed=${email}`,
+        })
+      );
+      window.location.href = "/chat";
     }
   };
 
   const handleGoogleSignIn = () => {
     // For demo, simulate Google sign in
     const googleUser = {
-      email: 'demo@gmail.com',
-      name: 'Demo User',
-      image: 'https://api.dicebear.com/7.x/avataaars/svg?seed=demo'
+      email: "demo@gmail.com",
+      name: "Demo User",
+      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=demo",
     };
-    localStorage.setItem('user', JSON.stringify(googleUser));
-    window.location.href = '/chat';
+    localStorage.setItem("user", JSON.stringify(googleUser));
+    window.location.href = "/chat";
   };
 
   return (
     <div className="flex min-h-screen items-center justify-center p-4">
       <Card className="w-full max-w-sm p-6">
-        <div className="text-center">
-          <Lotus className="mx-auto h-12 w-12 text-primary" />
+        <div className="text-center justify-items-center">
+          <Glogo />
           <h1 className="mt-4 text-2xl font-bold">Welcome Back</h1>
           <p className="mt-2 text-sm text-muted-foreground">
             Sign in to continue your spiritual journey
@@ -78,7 +81,9 @@ export default function SignInPage() {
             <div className="w-full border-t"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
+            <span className="bg-background px-2 text-muted-foreground">
+              Or continue with
+            </span>
           </div>
         </div>
 
@@ -108,14 +113,8 @@ export default function SignInPage() {
           Continue with Google
         </Button>
 
-        <Button
-          variant="ghost"
-          className="mt-4 w-full"
-          asChild
-        >
-          <Link href="/chat">
-            Continue as Guest
-          </Link>
+        <Button variant="ghost" className="mt-4 w-full" asChild>
+          <Link href="/chat">Continue as Guest</Link>
         </Button>
       </Card>
     </div>
